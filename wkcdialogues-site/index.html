@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WKCDialogues</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; font-size: 13px; line-height: 22px; color: #000; background: #fff; }
+a { color: #000; text-decoration: none; }
+a:hover { color: #49B1EA; text-decoration: underline; }
+
+/* Layout — matches original WordPress exactly */
+#center { position: relative; width: 1025px; margin: 0 auto; min-height: 100vh; }
+#wrapper { background: #fff; margin-top: 20px; padding: 0 20px; position: relative; min-height: 700px; }
+#whitebackground { background-color: #FFF; position: absolute; width: 1025px; min-height: 100%; top: 45px; left: -7px; z-index: 2; }
+#logo { position: absolute; width: 270px; height: 135px; z-index: 3; left: 2px; top: 27px; }
+#logo img { border: 0; }
+
+/* Right sidebar nav */
+#nav { position: absolute; width: 250px; z-index: 3; left: 756px; top: 0px; }
+#nav .nav-table { border-collapse: collapse; }
+#nav .nav-table img { display: block; }
+.nav-btn { display: block; width: 250px; height: 64px; border: 0; cursor: pointer; }
+.nav-btn img { width: 250px; height: 64px; border: 0; display: block; }
+.nav-text-links { padding: 30px 0 0 75px; width: 250px; }
+.nav-text-links p { margin-bottom: 4px; }
+.nav-text-links a { font-size: 13px; line-height: 22px; }
+#pagearchive { cursor: pointer; }
+#subpagearchive { display: none; padding-left: 15px; }
+#subpagearchive.show { display: block; }
+#pagefollowus { padding-top: 8px; }
+.search-input { background: url("assets/uploads/search_grey.gif") no-repeat scroll 0 center transparent; color: #999; font-size: 0.9em; padding: 2px 0 2px 17px; width: 155px; border: 1px solid #ccc; font-family: inherit; }
+.search-btn { font-family: inherit; font-size: 13px; cursor: pointer; }
+.nav-divider { width: 175px; margin: 6px 0; }
+.nav-divider-wide { width: 175px; position: absolute; left: 786px; top: 575px; z-index: 6; height: 10px; }
+.nav-divider-top { width: 175px; margin: 10px 0 6px 0; }
+
+/* Language toggle */
+.lang-toggle { position: absolute; left: 936px; top: 5px; z-index: 4; width: 70px; text-align: right; }
+.lang-toggle a { font-size: 13px; }
+
+/* Content area */
+#contents_flow { position: relative; width: 640px; z-index: 2; left: 120px; top: 175px; padding-bottom: 60px; }
+.video-area { width: 640px; }
+.video-area iframe { width: 640px; height: 360px; border: 0; }
+.video-caption { float: left; }
+.video-follow { float: right; padding: 10px 0 0 0; font-size: 12px; }
+.video-follow img { border: 0; width: 35px; height: 35px; }
+.clear-float { height: 30px; clear: both; }
+.content-table { border: 0; cellspacing: 0; cellpadding: 0; width: 550px; }
+.content-table td { padding: 0; }
+.title-img { margin-bottom: 8px; }
+.body_text { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; font-size: 14px; line-height: 22px; color: #000; }
+.subtext { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; font-size: 13px; color: #999; }
+.caption { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; font-size: 10px; color: #000; }
+.text { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; font-size: 13px; line-height: 22px; color: #000; }
+
+/* WKC color highlights */
+.wkc_edu { background-color: #24e2ff; }
+.wkc_net { background-color: #ff8093; }
+.wkc_dem { background-color: #80acff; }
+.wkc_idea { background-color: #fff54d; }
+.wkc_code { background-color: #ff6400; }
+.wkc_nat { background-color: #1affc6; }
+
+/* Video dialogue list */
+.video-list { margin-top: 8px; }
+.video-list .entry { padding: 4px 0; }
+.video-list .entry a { font-weight: bold; cursor: pointer; }
+.video-list .entry .topic { color: #666; }
+
+/* Design proposals */
+.design-section { margin-bottom: 32px; }
+.design-section h3 { border-bottom: 2px solid #49B1EA; padding-bottom: 6px; font-size: 16px; margin-bottom: 8px; }
+.design-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.design-grid img { width: 100%; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+.pdf-link { display: inline-block; background: #e8f0fe; color: #1a73e8; padding: 6px 14px; border-radius: 3px; margin: 3px 0; font-size: 13px; text-decoration: none; }
+.pdf-link:hover { background: #d2e3fc; }
+
+/* Participants */
+.participant-list { }
+.participant-list .entry { padding: 4px 0; font-size: 13px; line-height: 22px; }
+.participant-list .entry .name { font-weight: bold; }
+.participant-list .entry .role { color: #333; }
+
+/* Photos */
+.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 12px; }
+.photo-grid img { width: 100%; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
+/* Footer */
+.footer-bar { width: 640px; border: 0; cellspacing: 0; cellpadding: 0; margin-top: 20px; }
+.footer-bar td { padding: 8px 0; }
+
+/* Hide ZH by default */
+.zh-content { display: none; }
+body.lang-zh .en-content { display: none; }
+body.lang-zh .zh-content { display: block; }
+
+/* Responsive */
+@media (max-width: 1100px) {
+  #center { width: 100%; }
+  #nav { position: relative; left: 0; top: 20px; width: 100%; max-width: 640px; margin: 0 auto; }
+  #contents_flow { left: 0; top: 20px; margin: 0 auto; }
+  #logo { position: relative; left: 0; top: 0; }
+  .lang-toggle { position: relative; left: 0; top: 0; }
+  #wrapper { padding: 20px; }
+}
+</style>
+</head>
+<body class="lang-en">
+
+<div id="center">
+  <div id="wrapper">
+    <div id="whitebackground"></div>
+
+    <!-- Logo -->
+    <div id="logo">
+      <a href="#" onclick="navigate('home'); return false;" onmouseover="MM_swapImage('backtoindex','','assets/uploads/logo_index_over.png',1)" onmouseout="MM_swapImgRestore()">
+        <img src="assets/uploads/logo_index.png" name="backtoindex" width="270" height="135" border="0">
+      </a>
+    </div>
+
+    <!-- Language toggle -->
+    <div class="lang-toggle">
+      <p class="text" style="margin: 0; padding: 0;">
+        <a href="#" onclick="setLang('zh'); return false;"><strong>中文</strong></a>
+      </p>
+    </div>
+
+    <div class="nav-divider-wide"></div>
+
+    <!-- Right sidebar navigation -->
+    <div id="nav">
+      <table class="nav-table" width="250" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <table id="Table_01" width="250" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="padding:0; margin:0;"><img id="caticon" src="assets/uploads/categories_01.png" width="131" height="150" alt=""></td>
+                <td style="padding:0; margin:0;"><img src="assets/uploads/categories_02.png" width="119" height="150" alt=""></td>
+              </tr>
+              <tr>
+                <td colspan="2"><a href="#" onclick="navigate('videos','nature'); return false;" onmouseover="navHover('nature')" onmouseout="navNormal()"><img name="b01" id="b01" width="250" height="64" border="0" src="assets/uploads/categories_03.png"></a></td>
+              </tr>
+              <tr>
+                <td colspan="2"><a href="#" onclick="navigate('videos','building'); return false;" onmouseover="navHover('building')" onmouseout="navNormal()"><img name="b02" id="b02" width="250" height="64" border="0" src="assets/uploads/categories_04.png"></a></td>
+              </tr>
+              <tr>
+                <td colspan="2"><a href="#" onclick="navigate('videos','ideas'); return false;" onmouseover="navHover('ideas')" onmouseout="navNormal()"><img name="b03" id="b03" width="250" height="64" border="0" src="assets/uploads/categories_05.png"></a></td>
+              </tr>
+              <tr>
+                <td colspan="2"><a href="#" onclick="navigate('videos','demographics'); return false;" onmouseover="navHover('demographics')" onmouseout="navNormal()"><img name="b04" id="b04" width="250" height="64" border="0" src="assets/uploads/categories_06.png"></a></td>
+              </tr>
+              <tr>
+                <td colspan="2"><a href="#" onclick="navigate('videos','networks'); return false;" onmouseover="navHover('networks')" onmouseout="navNormal()"><img name="b05" id="b05" width="250" height="64" border="0" src="assets/uploads/categories_07.png"></a></td>
+              </tr>
+              <tr>
+                <td colspan="2"><a href="#" onclick="navigate('videos','education'); return false;" onmouseover="navHover('education')" onmouseout="navNormal()"><img name="b06" id="b06" width="250" height="64" border="0" src="assets/uploads/categories_08.png"></a></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table width="250" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="75">&nbsp;</td>
+                <td width="175" class="text">
+                  <p>&nbsp;</p>
+                  <p style="width: 175px;"></p>
+                  <p>
+                    <a href="#" onclick="navigate('overview'); return false;">An Overview</a><br>
+                    <a href="#" onclick="navigate('participants'); return false;">The Participants</a><br>
+                    <a href="#" onclick="navigate('contribute'); return false;">Contribute Your Dialogue</a>
+                  </p>
+                  <div id="pagearchive"><a href="javascript:void(0)" onclick="toggleArchive()">The Archive</a></div>
+                  <div id="subpagearchive">
+                    <a href="#" onclick="navigate('journal'); return false;">WKCDialogue Journal</a><br>
+                    <a href="#" onclick="navigate('films'); return false;">Films</a><br>
+                    <a href="#" onclick="navigate('photos'); return false;">Photos</a><br>
+                    <a href="#" onclick="navigate('diagrams'); return false;">Diagrams</a><br>
+                  </div>
+                  <p>
+                    <a href="#" onclick="navigate('about'); return false;">About AoD</a><br>
+                    <a href="#" onclick="navigate('volunteer'); return false;">Volunteer</a><br>
+                    <a href="#" onclick="navigate('acknowledgement'); return false;">Acknowledgement</a>
+                  </p>
+
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Content area -->
+    <div id="contents_flow"></div>
+
+  </div>
+</div>
+
+<script>
+// Video data
+const videos = {
+  nature: [
+    { person: 'William Yu', topic: 'the culture of grass', yt: 'yuaE1Ko_ygE' },
+    { person: 'Barney Cheng', topic: 'on urban oasis', yt: 'YJpXVoxIMY0' },
+    { person: 'Shum Long Tin', topic: 'non-programmed space', yt: '4B3xwxnLqXQ' },
+    { person: 'Michael Leung', topic: 'supporting zero emission', yt: '8e45C4D5qCU' },
+    { person: 'Alexandra Cook', topic: 'biodiversity', yt: '96uyMy--K4U' },
+    { person: 'Lucien Gamborotta', topic: 'tidal energy', yt: null },
+    { person: 'Kan Tai Keung', topic: '', yt: 'fNbUBKYbjos' },
+    { person: 'Elaine Young', topic: 'educational exchange', yt: 'up0FneB8T7Q' },
+  ],
+  building: [
+    { person: 'Billy Tam', topic: 'on trusting young architects', yt: 'IOYRLEKfSJY' },
+    { person: 'Aaron Tan', topic: 'codes to facilitate creativity', yt: 'Q4_1KomtCrk' },
+    { person: 'Wallace Chang', topic: 'green art mobilizations', yt: null },
+    { person: 'KS Wong', topic: 'greening building regulations', yt: '4eN0j_kLqd0' },
+    { person: 'Christine Bruckner', topic: 'touching parks', yt: '3cAEmvNRF2Q' },
+    { person: 'Sujata Govada', topic: 'maritime and land interface', yt: '0h3BttREkY0' },
+    { person: 'Kung Chi Shing', topic: 'performing Mozart in Mongkok', yt: '4x_qtRnpU1w' },
+    { person: 'Yung Ho Chang', topic: 'stacking and density as city culture', yt: null },
+    { person: 'Marc Brulhart', topic: 'challenge the brief', yt: '5p03-agMGps' },
+  ],
+  ideas: [
+    { person: 'Daniel Wu', topic: '', yt: 'oF58n1TjNC4' },
+    { person: 'Prudence Mak', topic: 'art is about making mistakes', yt: 'YcuhKzLpZNI' },
+    { person: 'Mathias Woo', topic: 'redefining local culture', yt: 'TV4MtAdS9GY' },
+    { person: 'Ire Tsui', topic: 'three tough questions', yt: 'UbDYz2JOtpU' },
+    { person: 'Ma Ka Fei', topic: 'desire for a literary museum', yt: 'bnYiWcohDKE' },
+    { person: 'Lo Wai Lik', topic: 'bottom-up cultural conglomerates', yt: 'lzj0jNHvW9I' },
+    { person: 'David Chan', topic: 'creating curatorial experimentation', yt: 'BcZ80ZqEv6k' },
+    { person: 'Lee Chun Fung', topic: 'cultural clusters for children', yt: 'QuOp1qc7Smo' },
+    { person: 'Graphic Airlines', topic: 'show us the artist incentives', yt: null },
+    { person: 'Alexanda Seno', topic: 'comparing HK to Singapore', yt: '96uyMy--K4U' },
+    { person: 'Adrian Wong + Michael Leung', topic: 'emerging artists', yt: '1CV8niiMQy4' },
+    { person: 'Jehan Chu', topic: 'private and public partnerships', yt: 'UJ1WvLmH_qg' },
+    { person: 'Savita Apte', topic: 'a tie in with young collectors', yt: 'svrkg8XwwpA' },
+    { person: 'Leo Lee Ou Fan', topic: 'surprises and mystery', yt: 'dCOFok38dI8' },
+    { person: 'Li Cheuk To', topic: 'cinematique complex', yt: 'CUFNzOIkXLo' },
+    { person: 'Henry Chu', topic: 'large scale digital interfaces', yt: '9DCo0aJFhVk' },
+    { person: 'Yana Peel + Nick Simunovic + Joanne Ooi', topic: 'much more on M+', yt: null },
+    { person: 'John Batten', topic: 'a walk through a Hong Kong collection', yt: 'bnIRNX64a68' },
+    { person: 'Ashley Wong', topic: 'flexible, adaptable spaces', yt: 'zJiJpfbH8iM' },
+    { person: 'Zhu Tao', topic: '', yt: null },
+  ],
+  networks: [
+    { person: 'Freeman Lau and Kan Tai Keung', topic: 'information to assess and access', yt: 'fNbUBKYbjos' },
+    { person: 'Tse O Shung', topic: 'live work artists residences', yt: '9vc3a__noB4' },
+    { person: 'Frank Yu', topic: 'phasing strategies', yt: 'fC6laxNqR-s' },
+    { person: 'Carl Gouw', topic: 'Pearl River Delta', yt: 'BylD6E2mA-A' },
+    { person: 'Zhu Tao', topic: 'urban design catastrophes', yt: null },
+    { person: 'Jay Forster', topic: 'industrial aesthetics, not duty free shopping', yt: null },
+  ],
+  demographics: [
+    { person: 'Fruit Chan', topic: 'desire for uniqueness', yt: 'uo-I5waOgM0' },
+    { person: 'Ai Weiwei', topic: 'unique culture for a free space', yt: 'wic9xOdIUyY' },
+    { person: 'Tanya Chan', topic: 'advocating arts education policies', yt: 'IYXpiamLVJY' },
+    { person: 'Nury Vittachi', topic: 'the capital of capitalism', yt: 'VIP7fINWasU' },
+    { person: 'Piera Chen', topic: 'culture has to be alive', yt: 'A5FKAwtsP78' },
+    { person: 'Philip Lau and Jaffa Lam', topic: 'mass participation and genuine public', yt: 'vblM0nFPL0Q' },
+    { person: 'Tang Siu Wa', topic: 'desire for more intellectual discussion', yt: 'NpwLnUTTGus' },
+    { person: 'Fred Lam', topic: 'lively communities and social inclusion', yt: 'se-QPZkNALA' },
+    { person: 'Leung Po', topic: 'M+, visual culture and politics', yt: '9xgJFXdDRok' },
+  ],
+  education: [
+    { person: 'Yasi', topic: 'audience building', yt: 'QcNGnD2-M0k' },
+    { person: 'Li Chee Ching + Lau Wan Kit', topic: 'arts education', yt: 'j78dpwZwJoE' },
+    { person: 'Daniel Chua', topic: 'the urban imagination', yt: 'JvWPpRLMCeI' },
+    { person: 'Leung Man Tao', topic: 'reclaiming the street for the people', yt: 'StrqmSHsSXI' },
+    { person: 'Valerie Doran', topic: 'mentorship and patrimony', yt: 'iJsRDRn2ekY' },
+  ],
+};
+
+const categoryTitles = {
+  nature: { en: 'title_nature.png', zh: 'title_nature_zh.png', cat: 'Nature' },
+  building: { en: 'title_building.png', zh: 'title_building_zh.png', cat: 'Building Codes' },
+  ideas: { en: 'title_ideas.png', zh: 'title_ideas_zh.png', cat: 'Ideas' },
+  networks: { en: 'title_network.png', zh: 'title_network_zh.png', cat: 'Networks' },
+  demographics: { en: 'title_demographic.png', zh: 'title_demographic_zh.png', cat: 'Demographics' },
+  education: { en: 'title_eduction.png', zh: 'title_eduction_zh.png', cat: 'Education' },
+};
+
+const participants = [
+  ['Daniel Chua','Head of School of Humanities at HKU'],['Leo Lee Ou Fan','Writer, Critic, Professor of Cultural Studies at CUHK'],
+  ['Piera Chen','Writer for Lonely Planet Hong Kong and Macau'],['Agnes Lin','Gallery Director; Founder and Director of the Osage Art Foundation'],
+  ['Douglas Young','Designer; Founder and Chief Executive Officer of G.O.D.'],['Benjamin Lau','Designer; Founder and Chief Operating Officer of G.O.D.'],
+  ['Daniel Wu','Actor, Film Director'],['Fruit Chan','Film maker'],
+  ['Leung Man Tao','Cultural Critic, writer and TV commentator'],['Kung Chi Shing','musician, composer, director of Street Music series'],
+  ['Yung Ho Chang','Architect & Professor, Founding Partner of Atelier FCJZ'],['Jay Forster','co-founder and organizer of Clockenflap'],
+  ['Lo Wai Luk','Associate Professor of the Department of Cinema and Television'],['Lucien Gamboratta','Energy Expert; Member of Motorwave Group'],
+  ['Dr. William Yu','Climate Change Expert; Head of Climate Program WWF – Hong Kong'],['Tanya Chan','Legislative Councilor; Founding member of Civic Party HK'],
+  ['Zhu Tao','Assistant Professor; Cofounder of ZL Architecture'],['Nury Vittachi','Journalist and Author'],
+  ['Li Cheuk To','Film Critic; Director of the Hong Kong International Film Festival'],['Alexandra Cook','Assistant Professor; Department of Philosophy at HKU'],
+  ['Ai Weiwei','Chinese artist'],['Jehan Chu','Director of the Vermillion Art Collections'],
+  ['Winnie So','Writer'],['Carl Gouw','Managing Director of the Goldig Investment Group'],
+  ['Marisa Yiu','Creative Director of WKCDialogues'],['Eric Schuldenfrei','Creative Director of WKCDialogues'],
+  ['Elaine Young','Founder and Artistic Director of LAB-yrinth'],['Alexandra Seno','Journalist'],
+  ['Ashley Wong','Artist, Founder of LOUDSPKR'],['Christine Bruckner','Architect, former President of the AIA Hong Kong'],
+  ['Savita Apte','Art Historian, Director of Art Dubai'],['Sujata Govada','Urban Designer; Chair of Urban Design Committee of AIA Hong Kong'],
+  ['Mathias Woo','Cultural Critic'],['Ma Ka Fai','Culture Critic and Radio host'],
+  ['Shum Long Tin','Film Critic'],['Yasi','Poet and writer'],
+  ['Barney Cheng','Fashion Designer'],['Tang Siu Wa','Writer and Radio host'],
+  ['Stella Tse','Cultural Critic & Playwright'],['Fred Lam','Chief Campaigner of the Roundtable Community'],
+  ['Lee Chun Fung','Artist; Founder of community art space Woofer Ten'],['Aaron Tan','Architect; Director, RAD Architecture, Hong Kong'],
+  ['Billy Tam','Architect'],['Frank Yu','Architect; Design Principal of Gravity Partnership Limited'],
+  ['K.S. Wong','Architect; Director of Sustainable Design at Ronald Lu and Partners'],['Wallace Chang','Architect and Professor'],
+  ['Ire Tsui','Editor'],['David Chan','Curator; Director of Osage Gallery'],
+  ['Li Chee Ching','Artist, Cartoonist'],['Lau Wan Kit','Artist, Cartoonist'],
+  ['Adrian Wong','Detour Artist'],['Michael Leung','Detour Designer'],
+  ['Jaffa Lam','Detour Artist'],['Graphic Airlines (Kathy Kuk and Tat Chan)','Detour Artists'],
+  ['Prudence Mak','Detour Designer'],['Henry Chu','Detour Designer'],
+  ['Freeman Lau','Founder of Kan and Lau Design Consultants'],['Kan Tai Keung','Founder of Kan and Lau Design Consultants'],
+  ['Valerie Doran','Independent Curator, art critic'],['John Batten','Urban Activist, founder Organiser of ArtWalk'],
+  ['Leung Po','artist'],['Yana Peel','co-founder of Intelligence Squared Asia, co-director Outset Contemporary Art Fund'],
+  ['Joanne Ooi','CEO of Clean Air Network, founder of Ooi Botos gallery'],['Nick Simunovic','Director of Gagosian Gallery Hong Kong'],
+  ['Marc Brulhart','Designer, Founder of Marc & Chantal Design'],
+];
+
+const journalEntries = [
+  {source:'Ta Kung Pao',date:'21 August 2010',titleEn:'Editorial: Fantastic WK proposals Rekindle the Public\'s Hope',titleZh:'社評 |「西九」方案精彩市民重燃希望',quote:'三個設計概念方案的出台，標誌著整個西九文化區的建設邁出了重要的第一步',quoteEn:'The 3 proposals have elevated the level of discussion and understanding of the general public on West Kowloon Cultural District from an abstract, enigmatic term to a more visualized, solid project.'},
+  {source:'South China Morning Post',date:'24 August 2010',author:'Joyce Ng',titleEn:'Push for fund to lure long-run foreign shows',quote:'West Kowloon should build a strong production and education arm if it is to distinguish itself from cities in the Pearl River Delta.'},
+  {source:'South China Morning Post',date:'23 August 2010',author:'Tanna Chong',titleEn:'Arts hub chief dismisses fears of design mishmash',quote:'"We are definitely not on the side of the rich." Koolhaas said. There were features in each of the plans that could be incorporated into the others — "such as strengths in environmental transport measures in particular proposals, they can be all combined".'},
+  {source:'Ming Pao',date:'27 August 2010',author:'趙聰 / Zhao Cong',titleEn:'A Preposterous system: Why do we need architects to tell us what we want for West Kowloon!',titleZh:'荒唐的機制 竟由建築師告訴我們西九要什麼!',quote:'而且西九的作用不是承載所有的功能，而是帶動周邊的互動。',quoteEn:'The role of West Kowloon is not to perform every function, but to promote the dynamics and interaction with the surroundings.'},
+  {source:'Hong Kong Headline',date:'30 August 2010',author:'潘國靈 / Lawrence Pun',titleEn:'Talk on West Kowloon(1): Concept and Values',titleZh:'「西九」概念談(一)： 概念與價值',quote:'吸引大部份訪客遊人的，不是香港的國際大都會特質，而是她本身的地道色彩。',quoteEn:'What appeals to tourists is not the cosmopolitan side of Hong Kong but its indigenous features.'},
+  {source:'South China Morning Post',date:'31 August 2010',author:'Ciara Shannon',titleEn:'An eco-haven to bring the message home',quote:'West Kowloon could possibly become the much-needed inner eden of our city.'},
+  {source:'South China Morning Post',date:'27 August 2010',titleEn:'Editorial: Arts hub costs should be disclosed now',quote:'Part of the reason for the more sympathetic reception this time is that all three architects — as well as officials — seem to have digested what most people want for the hub.'},
+  {source:'Ming Pao',date:'14 September 2010',author:'馮永基 / Raymond Fung',titleEn:'People Oriented — No Need for Surprise',titleZh:'以人為本 不需驚喜的西九',quote:'蓋西九大業，乃為未來世代而建造，該深思時空錯配及各適其適的形式主義，包括各種環保設備，是否經得起時間考驗，才不致成為另一種昂貴的時尚裝飾。',quoteEn:'To prevent the need to rebuild for future generations, in-depth considerations on these non-coeval elements and various form of ritualism, including environmental facilities, are necessary so as to ensure they are durable and sustainable, instead of an exorbitant decoration.'},
+];
+
+// Current page state
+let currentPage = 'home';
+let currentVideoCat = 'nature';
+let currentVideoIdx = 0;
+let isZh = false;
+
+// Navigation
+function navigate(page, videoCat) {
+  currentPage = page;
+  if (videoCat) currentVideoCat = videoCat;
+  renderPage();
+  // Scroll to top of content
+  window.scrollTo(0, 0);
+  document.getElementById('contents_flow').scrollTop = 0;
+}
+
+// Archive toggle
+function toggleArchive() {
+  const el = document.getElementById('subpagearchive');
+  el.classList.toggle('show');
+}
+
+// Language
+function setLang(lang) {
+  isZh = (lang === 'zh');
+  document.body.classList.remove('lang-en', 'lang-zh');
+  document.body.classList.add('lang-' + lang);
+  document.querySelector('.lang-toggle a').innerHTML = isZh ? '<strong>English</strong>' : '<strong>中文</strong>';
+  document.querySelector('.lang-toggle a').onclick = function() { setLang(isZh ? 'en' : 'zh'); return false; };
+  renderPage();
+}
+
+// Nav hover (image swap)
+function navHover(cat) {
+  const catMap = { nature:3, building:4, ideas:5, demographics:6, networks:7, education:8 };
+  const num = catMap[cat];
+  if (!num) return;
+  const btn = document.getElementById('b0' + (cat === 'nature' ? '1' : cat === 'building' ? '2' : cat === 'ideas' ? '3' : cat === 'demographics' ? '4' : cat === 'networks' ? '5' : '6'));
+  const caticon = document.getElementById('caticon');
+  if (btn) btn.src = 'assets/uploads/categories_over_0' + num + '.png';
+  if (caticon) caticon.src = 'assets/uploads/exclamation_' + (cat === 'nature' ? 'nature' : cat === 'building' ? 'building' : cat === 'ideas' ? 'idea' : cat === 'demographics' ? 'demographic' : cat === 'networks' ? 'network' : 'education') + '_01.png';
+}
+function navNormal() {
+  for (let i = 1; i <= 6; i++) {
+    const btn = document.getElementById('b0' + i);
+    if (btn) btn.src = 'assets/uploads/categories_0' + (i+2) + '.png';
+  }
+  const caticon = document.getElementById('caticon');
+  if (caticon) caticon.src = 'assets/uploads/categories_01.png';
+}
+
+// MM_swapImage/Restore (for logo hover)
+function MM_swapImage() {
+  const args = Array.from(arguments);
+  const name = args[0];
+  const src = args[args.length - 1].replace('/wp-content/uploads/2010/11/', 'assets/uploads/');
+  const img = document.getElementsByName(name)[0] || document.getElementById(name);
+  if (img) { img.oSrc = img.src; img.src = src; }
+}
+function MM_swapImgRestore() {
+  document.querySelectorAll('img').forEach(img => { if (img.oSrc) img.src = img.oSrc; });
+}
+
+// Render the current page content
+function renderPage() {
+  const container = document.getElementById('contents_flow');
+  
+  if (currentPage === 'home') {
+    container.innerHTML = renderHome();
+  } else if (currentPage === 'overview') {
+    container.innerHTML = renderOverview();
+  } else if (currentPage === 'participants') {
+    container.innerHTML = renderParticipants();
+  } else if (currentPage === 'videos') {
+    container.innerHTML = renderVideoPage(currentVideoCat);
+  } else if (currentPage === 'journal') {
+    container.innerHTML = renderJournal();
+  } else if (currentPage === 'contribute') {
+    container.innerHTML = renderContribute();
+  } else if (currentPage === 'about') {
+    container.innerHTML = renderAbout();
+  } else if (currentPage === 'volunteer') {
+    container.innerHTML = renderVolunteer();
+  } else if (currentPage === 'acknowledgement') {
+    container.innerHTML = renderAcknowledgement();
+  } else if (currentPage === 'films' || currentPage === 'photos' || currentPage === 'diagrams') {
+    container.innerHTML = renderArchivePlaceholder(currentPage);
+  } else {
+    container.innerHTML = '<p>Page not found.</p>';
+  }
+}
+
+function footerBar() {
+  return `<table class="footer-bar"><tr>
+    <td class="caption">©2026 West Kowloon Cultural Dialogues. All Rights Reserved.</td>
+    <td align="right"><img src="assets/uploads/aod_logo.png" alt="" width="100" height="81"></td>
+  </tr></table>`;
+}
+
+
+function renderHome() {
+  return `
+    <table border="0" cellspacing="0" cellpadding="0" width="640"><tbody><tr><td>
+    <div id="videoarea"><iframe width="640" height="360" frameborder="0" src="https://www.youtube.com/embed/0v20a3CA3JQ" allowfullscreen></iframe></div>
+    </td></tr><tr><td>
+    <div style="float:left;"><p class="caption">Contribute Your Dialogue</p></div>
+    <div id="videolike" style="float:right; padding:10px 0 0 0;"></div>
+    <div style="height:30px;clear:both;">&nbsp;</div>
+    <table border="0" cellspacing="0" cellpadding="0" width="640"><tbody><tr>
+    <td id="text" width="300"></td>
+    <td align="right"></td>
+    </tr></tbody></table>
+    <table border="0" cellspacing="0" cellpadding="0" width="550"><tbody><tr><td>
+    <img src="assets/images/title_index.png" alt="" width="424" height="43">
+    <p class="body_text">We are very excited in the potential of the future West Kowloon Cultural District, but we believe that everyone's participation is needed. For the WKCDialogues we hope to create opportunities for greater exchange with professional analysis and research to better elevate our shared understanding of the process. As part of our mission we have invited well-known professionals, critics, and writers to share with the public their professional comments on the WKCD. If you are interested to be part of this project and to share your comments, questions or statements on our website, please feel free to contact us at <strong>contribute@wkcdialogues.org</strong>. Please also join our Facebook page at <strong><a href="https://www.facebook.com/WKCDialogue" target="_blank">www.facebook.com/WKCDialogue</a></strong>!</p>
+    </td></tr></tbody></table>
+    </td></tr></tbody></table>
+    ${footerBar()}`;
+}
+
+function renderOverview() {
+  const titleImg = isZh ? 'title_aims_zh.png' : 'title_aims.png';
+  return `
+    <table border="0" cellspacing="0" cellpadding="0" width="640"><tbody><tr><td>
+    <div id="videoarea"><iframe width="640" height="360" frameborder="0" src="https://www.youtube.com/embed/0v20a3CA3JQ" allowfullscreen></iframe></div>
+    </td></tr><tr><td>
+    <div style="float:left;"><p class="caption">Overview</p></div>
+    <div style="height:30px;clear:both;">&nbsp;</div>
+    <table border="0" cellspacing="0" cellpadding="0" width="550"><tbody><tr><td>
+    <img src="assets/images/${titleImg}" alt="" width="440" height="43">
+    <p class="body_text">1. To promote broad-ranging discussion and numerous outlooks; we seek opinions on the West Kowloon Cultural District conceptual plans so that insightful recommendations can be collected and voiced during the public consultation period.</p>
+    <p class="body_text">2. To decode the current conceptual plans and ask a few questions; promoting more discussion and a platform for exchange with careful analysis and research. All the while realizing that these plans are not "architectural" or "master" plans but "vision" plans.</p>
+    <p class="body_text">3. To create an archive, a working document, an active website, and a series of events to collect a wide range of ideas in an organized manner useful to the WKCD initiative.</p>
+    ${isZh ? '<p class="body_text">我們的目標為共同創造對話及建設一個平台，並於2010年11月20日，即西九文化區公眾參與活動完結前凝聚更大的動力。然而，「西九文化對話」是一個持續的項目，未來我們將會有更多不同的文化對話。</p>' : ''}
+    </td></tr></tbody></table>
+    </td></tr></tbody></table>
+    ${footerBar()}`;
+}
+
+function renderVideoPage(cat) {
+  const t = categoryTitles[cat];
+  const titleImg = isZh ? t.zh : t.en;
+  const entries = videos[cat];
+  currentVideoIdx = 0;
+  
+  return `
+    <div id="videoarea"><iframe id="videoFrame" width="640" height="360" frameborder="0" src="${entries[0].yt ? 'https://www.youtube.com/embed/' + entries[0].yt : ''}" allowfullscreen></iframe></div>
+    <div style="float:left;"><p id="caption" class="caption">${entries[0].person} | on <a class="caption" href="#">${t.cat}</a></p></div>
+    <div style="float:right; padding:10px 0 0 0;"></div>
+    <div style="height:30px;clear:both;">&nbsp;</div>
+    <table border="0" cellspacing="0" cellpadding="0" width="550"><tbody><tr><td>
+    <img src="assets/images/${titleImg}" alt="" width="424" height="43">
+    
+    <p class="subtext">Click for the video dialogues</p>
+    <div class="video-list">
+    ${entries.map((v, i) => `<div class="entry" onclick="changeVideo(${i},'${cat}'); return false;" style="cursor:pointer;"><strong>${v.person}</strong> / ${v.topic || ''}</div>`).join('')}
+    </div>
+    </td></tr></tbody></table>
+    ${footerBar()}`;
+}
+
+function changeVideo(idx, cat) {
+  const entries = videos[cat];
+  const v = entries[idx];
+  const frame = document.getElementById('videoFrame');
+  const caption = document.getElementById('caption');
+  const t = categoryTitles[cat];
+  
+  if (v.yt) {
+    frame.src = 'https://www.youtube.com/embed/' + v.yt;
+  } else {
+    frame.src = '';
+    frame.outerHTML = '<div id="videoarea" style="width:640px; height:360px; background:#000; color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px;">Video not yet uploaded to YouTube</div>';
+  }
+  caption.innerHTML = v.person + ' | on <a class="caption" href="#">' + t.cat + '</a>';
+}
+
+// Find a participant's video in the videos data by name (fuzzy match)
+function findParticipantVideo(name) {
+  for (const cat in videos) {
+    for (let i = 0; i < videos[cat].length; i++) {
+      const v = videos[cat][i];
+      // Match if the participant name appears in the video person field
+      // Handles cases like "Freeman Lau and Kan Tai Keung" matching either name
+      if (v.person === name || v.person.includes(name) || name.includes(v.person)) {
+        return { cat: cat, idx: i };
+      }
+    }
+  }
+  return null;
+}
+
+function renderParticipants() {
+  const titleImg = isZh ? 'title_participants_zh.png' : 'title_participants.png';
+  return `
+    <table border="0" cellspacing="0" cellpadding="0" width="640"><tbody><tr><td>
+    <div id="videoarea"><iframe width="640" height="360" frameborder="0" src="https://www.youtube.com/embed/0v20a3CA3JQ" allowfullscreen></iframe></div>
+    </td></tr><tr><td>
+    <div style="float:left;"><p class="caption">Overview</p></div>
+    <div style="height:30px;clear:both;">&nbsp;</div>
+    <table border="0" cellspacing="0" cellpadding="0" width="550"><tbody><tr><td>
+    <img src="assets/images/${titleImg}" alt="" width="440" height="43">
+    <p class="body_text">If you are interested to be part of this project and to share your comments, questions or statements on our website, please feel free to contact us at <strong>contribute@wkcdialogues.org</strong>.</p>
+    <p class="body_text">This is a consolidated list of the participants for the WKCDialogues project, along with the contributions that they have shared.</p>
+    <div class="participant-list">
+    ${participants.map(([name, role]) => {
+      const link = findParticipantVideo(name);
+      if (link) {
+        return `<div class="entry" onclick="navigate('videos','${link.cat}'); setTimeout(() => changeVideo(${link.idx}, '${link.cat}'), 50); return false;" style="cursor:pointer;"><span class="name">${name}</span> <span class="role">/ ${role}</span></div>`;
+      }
+      return `<div class="entry"><span class="name">${name}</span> <span class="role">/ ${role}</span></div>`;
+    }).join('')}
+    </div>
+    </td></tr></tbody></table>
+    </td></tr></tbody></table>
+    ${footerBar()}`;
+}
+
+function renderJournal() {
+  return `
+    <table border="0" cellspacing="0" cellpadding="0" width="640"><tbody><tr><td>
+    <img src="assets/images/title_-journal.png" alt="" width="424" height="43">
+    
+    ${journalEntries.map(e => `
+      <div style="margin: 16px 0; padding-bottom: 12px; border-bottom: 1px solid #eee;">
+        <p class="text"><strong>${e.author ? e.author + ' | ' : ''}${e.titleEn || ''}${e.titleZh ? ' | ' + e.titleZh : ''}</strong></p>
+        <p class="subtext">${e.source} | ${e.date}</p>
+        ${e.quote ? '<p class="body_text" style="margin:6px 0; padding:6px 14px; border-left: 3px solid #49B1EA; background: #f8f9fa; font-style: italic;">' + e.quote + (e.quoteEn ? '<br><span style="color:#555;">' + e.quoteEn + '</span>' : '') + '</p>' : ''}
+      </div>
+    `).join('')}
+    </td></tr></tbody></table>
+    ${footerBar()}`;
+}
+
+function renderContribute() {
+  return `
+    <table border="0" cellspacing="0" cellpadding="0" width="640"><tbody><tr><td>
+    <div id="videoarea"><iframe width="640" height="360" frameborder="0" src="https://www.youtube.com/embed/0v20a3CA3JQ" allowfullscreen></iframe></div>
+    </td></tr><tr><td>
+    <div style="float:left;"><p class="caption">Contribute Your Dialogue</p></div>
+    <div style="height:30px;clear:both;">&nbsp;</div>
+    <table border="0" cellspacing="0" cellpadding="0" width="550"><tbody><tr><td>
+    <img src="assets/images/title_dialogue.png" alt="" width="424" height="43">
+    <p class="body_text">We are very excited in the potential of the future West Kowloon Cultural District, but we believe that everyone's participation is needed. For the WKCDialogues we hope to create opportunities for greater exchange with professional analysis and research to better elevate our shared understanding of the process. As part of our mission we have invited well-known professionals, critics, and writers to share with the public their professional comments on the WKCD. If you are interested to be part of this project and to share your comments, questions or statements on our website, please feel free to contact us at <strong>contribute@wkcdialogues.org</strong>. Please also join our Facebook page at <strong><a href="https://www.facebook.com/WKCDialogue" target="_blank">www.facebook.com/WKCDialogue</a></strong>!</p>
+    </td></tr></tbody></table>
+    </td></tr></tbody></table>
+    ${footerBar()}`;
+}
+
+function renderAbout() {
+  const titleImg = isZh ? 'title_about_zh.png' : 'title_about.png';
+  const enText = 'Hong Kong Ambassadors of Design is a non-profit organization and registered charity founded in 2006. We work together with our sister organization, the Hong Kong Design Centre, to generate enthusiasm in creative ventures in Hong Kong, promoting design and culture with a dynamic and educational approach.';
+  const zhText = '香港設計大使以提升普羅大眾的創造力為己任。我們相信，豐富多彩的文化及創意活動能夠有效推動社會持續發展，激發社會活力。於是2006年我們正式成立此非牟利及註冊慈善組織，同時與我們的姊妹機構－香港設計中心協同合作，透過舉辦多元化及具教育性的活動，給予大眾充分了解及參與創意文化的機會，繼而推廣本土設計、創意及文化的發展。';
+  return `
+    <table border="0" cellspacing="0" cellpadding="0" width="550"><tbody><tr><td>
+    <img src="assets/images/${titleImg}" alt="" width="424" height="43">
+    <p class="body_text">${isZh ? zhText : enText}</p>
+    <div style="margin-top:16px;"><img src="assets/uploads/aod_logo.png" alt="" width="100" height="81"></div>
+    </td></tr></tbody></table>
+    ${footerBar()}`;
+}
+
+function renderVolunteer() {
+  const titleImg = isZh ? 'title_volunteer_zh.png' : 'title_volunteer.png';
+  const enText = `<p class="body_text">WKCDialogues needs everyone's support and time to realize such an ambitious project.</p>
+    <p class="body_text">We are looking for fluent Cantonese-English and English-Cantonese speakers to provide kind voluntary translation services for the events that we have planned, starting in early November. We are also looking for volunteers to be involved in the filming projects that are upcoming.</p>
+    <p class="body_text">If interested, please send your introduction letter and a one page CV to <strong>volunteer@wkcdialogues.org</strong>.</p>
+    <p class="body_text">We sincerely pledge for your support. This is your chance to make the West Kowloon Cultural District your own, to help envision what the Hong Kong cultural landscape should be, and to celebrate Hong Kong as one of the leading cultural innovators of the world.</p>`;
+  const zhText = `<p class="body_text">「西九文化對話」需要大家的支持和時間來實現這雄心勃勃的項目。</p>
+    <p class="body_text">我們正在尋找操流利廣東話及英語的義工參與翻譯事項，並於11月初開始義務工作。另外，我們也在尋找義工參與即將舉行的拍攝工作。</p>
+    <p class="body_text">如有興趣，請將您的簡介和一頁的簡歷電郵致 <strong>volunteer@wkcdialogues.org</strong>。</p>
+    <p class="body_text">我們懇切得到您的支持。這是你創造自己的西九龍文化區的機會，一同考慮香港應有的文化景觀，並慶祝香港成為世界其中之一的文化發展先鋒。</p>`;
+  return `
+    <table border="0" cellspacing="0" cellpadding="0" width="550"><tbody><tr><td>
+    <img src="assets/images/${titleImg}" alt="" width="424" height="43">
+    ${isZh ? zhText : enText}
+    </td></tr></tbody></table>
+    ${footerBar()}`;
+}
+
+function renderAcknowledgement() {
+  const titleImg = isZh ? 'title_acknowledgement_zh.png' : 'title_acknowledgement.png';
+  const en = `<p class="body_text"><strong>Eric Schuldenfrei</strong>, Creative Director<br>
+    <strong>Marisa Yiu</strong>, Creative Director<br>
+    <strong>Bonnie Chan Woo</strong>, Communication Director</p>
+    <p class="body_text" style="margin-top:12px;">Project Team:<br>
+    Madison Communications 翔樂傳訊, George Wong 黃卓軒, Klas Ehnemark, Shern Sharma, Wesley Ho 何鴻禮, Yubing Gao 高语冰, Chris Tsui 徐壽懿, Adonian Freeman Chan 陳濬人</p>
+    <p class="body_text" style="margin-top:12px;">NOTE:<br>
+    This is a special project initiated as part of Hong Kong Ambassadors of Design by:<br>
+    Eric Schuldenfrei, deTour advisory group member, founding partner of ESKYIU;<br>
+    Marisa Yiu, HK Ambassadors of Design Board member and deTour Co-Director, founding partner of ESKYIU;<br>
+    Bonnie Chan, Founding member of HK Ambassadors of Design, CEO of Icicle Group.</p>
+    <p class="body_text" style="margin-top:12px; font-style:italic;">The team would like to thank all contributors and participants to this Dialogues effort.</p>`;
+  const zh = `<p class="body_text">「西九文化對話」背景資料</p>
+    <p class="body_text"><strong>邵達輝先生</strong>， 創作總監<br>
+    <strong>姚嘉姍女士</strong>，創作總監<br>
+    <strong>胡陳德姿女士</strong>，傳訊總監</p>
+    <p class="body_text" style="margin-top:12px;">Project Team:<br>
+    Madison Communications 翔樂傳訊, George Wong 黃卓軒, Klas Ehnemark, Shern Sharma, Wesley Ho 何鴻禮, Yubing Gao 高语冰, Chris Tsui 徐壽懿, Adonian Freeman Chan 陳濬人</p>
+    <p class="body_text" style="margin-top:12px;">此項目由香港設計大使發起：<br>
+    邵達輝，deTour顧問成員，ESKYIU創辦合夥人；<br>
+    姚嘉姍，香港設計大使董事會成員及deTour聯合總監，ESKYIU創辦合夥人；<br>
+    胡陳德姿，香港設計大使創會成員，Icicle Group行政總裁。</p>
+    <p class="body_text" style="margin-top:12px; font-style:italic;">團隊衷心感謱所有對此對話項目的貢獻者及參與者。</p>`;
+  return `
+    <table border="0" cellspacing="0" cellpadding="0" width="550"><tbody><tr><td>
+    <img src="assets/images/${titleImg}" alt="" width="424" height="43">
+    ${isZh ? zh : en}
+    </td></tr></tbody></table>
+    ${footerBar()}`;
+}
+
+function renderArchivePlaceholder(type) {
+  const titles = { films: 'title_films.png', photos: 'title_photos.png', diagrams: 'title_diagrams.png' };
+  const titleImg = isZh ? titles[type].replace('.png','_zh.png') : titles[type];
+  
+  let content = '';
+  
+  if (type === 'films') {
+    content = '<p class="body_text">Click for the video dialogues. Please take a short film and upload it to Vimeo! Send us the link to <strong>contribute@wkcdialogues.org</strong> and we will do the rest!</p>';
+  } else if (type === 'photos') {
+    const photos = [];
+    for (let i = 1; i <= 6; i++) {
+      const num = String(i).padStart(3, '0');
+      photos.push(`<img src="assets/uploads/PreWorkshop_${num}.jpg" alt="PreWorkshop ${i}" style="width:100%;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.12);">`);
+    }
+    content = `
+      <div class="photo-grid">${photos.join('\n')}</div>
+      <p class="caption" style="margin-top:12px;">A pre-WKCDialogues workshop meeting with Agnes Lin, Douglas Young, Benjamin Lau, Laurence Liauw, Winnie So, Leo Lee Ou Fan, Alvin Yip, Bonnie Chan, Eric Schuldenfrei, Marisa Yiu. See overview from Winnie So: <a href="http://littlecreamlife.littlecreambook.com/2010/10/west-kowloon-cultural-district.html">http://littlecreamlife.littlecreambook.com/2010/10/west-kowloon-cultural-district.html</a></p>
+    `;
+  } else if (type === 'diagrams') {
+    content = `
+      <div class="photo-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+        <div>
+          <img src="assets/uploads/li_chi_ching_drawing.jpg" alt="Li Chi Ching drawing" style="width:100%;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.12);">
+          <p class="caption" style="margin-top:4px;">A Li Chi Ching drawing</p>
+        </div>
+        <div>
+          <img src="assets/uploads/jeffrey_lau_wan_kit_drawing.jpg" alt="Jeffrey Lau Wan Kit drawing" style="width:100%;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.12);">
+          <p class="caption" style="margin-top:4px;">A Jeffrey Lau Wan Kit drawing</p>
+        </div>
+      </div>
+      <p class="body_text" style="margin-top:12px;">More coming soon!</p>
+    `;
+  }
+
+  return `
+    <table border="0" cellspacing="0" cellpadding="0" width="550"><tbody><tr><td>
+    <img src="assets/images/${titleImg}" alt="" width="424" height="43">
+    ${content}
+    </td></tr></tbody></table>
+    ${footerBar()}`;
+}
+
+// Init
+renderPage();
+</script>
+</body>
+</html>
